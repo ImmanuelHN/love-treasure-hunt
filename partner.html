@@ -33,35 +33,24 @@
       <a class="btn ghost" href="index.html">Back</a>
     </section>
   </main>
-  <script type="module" src="js/app.js"></script>
-  <script>
-    function getConfigFromURL() {
-      const params = new URLSearchParams(window.location.search);
-      const data = params.get("data");
+  <script type="module">
+    import { decodeConfigFromURL } from "./js/url-config.js";
 
-      if (!data) {
-        alert("Invalid link 💔");
-        return null;
-      }
+    const { config, error } = decodeConfigFromURL();
 
-      try {
-        const decoded = JSON.parse(decodeURIComponent(atob(data)));
-        return decoded;
-      } catch (e) {
-        console.error("Decode error:", e);
-        alert("Invalid link 💔");
-        return null;
-      }
+    if (error === "MISSING_DATA") {
+      alert("Invalid link 💔");
+      throw new Error("No data param in URL");
     }
 
-    const GAME_CONFIG = getConfigFromURL();
-
-    if (!GAME_CONFIG) {
-      throw new Error("Missing configuration");
+    if (error === "DECODE_FAILED") {
+      alert("Invalid link 💔");
+      throw new Error("Decode failed");
     }
 
-    sessionStorage.setItem("GAME_DATA", JSON.stringify(GAME_CONFIG));
-    window.GAME_DATA = GAME_CONFIG;
+    window.GAME_DATA = config;
+    sessionStorage.setItem("GAME_DATA", JSON.stringify(config));
   </script>
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>

@@ -21,6 +21,23 @@ function byId(id) {
   return document.getElementById(id);
 }
 
+function generateShareLink(config) {
+  const encoded = encodeConfig(config);
+  if (!encoded) {
+    alert("Failed to generate link 💔");
+    return null;
+  }
+
+  const baseUrl = window.location.origin;
+  const link = `${baseUrl}/partner.html?data=${encoded}`;
+
+  const linkInput = byId("shareLink") || byId("shareLinkOut");
+  if (linkInput) linkInput.value = link;
+
+  window.__LATEST_SHARE_LINK__ = link;
+  return { link, encoded };
+}
+
 function applyPageTransition() {
   document.body.classList.add("fade-enter");
   requestAnimationFrame(() => {
@@ -177,11 +194,13 @@ async function bootCreatorPage() {
 
     try {
       const config = buildConfigFromForm(form);
-      const encoded = encodeConfig(config);
+      const share = generateShareLink(config);
+      if (!share) return;
+      const encoded = share.encoded;
       saveEncodedConfig(encoded);
 
       const expiryHours = Number(new FormData(form).get("expiryOption") || 0);
-      let shareLink = generateEncodedShareLink(encoded);
+      let shareLink = share.link || generateEncodedShareLink(encoded);
       let saveModeLabel = "Link-only mode (encoded URL).";
 
       if (expiryHours > 0) {

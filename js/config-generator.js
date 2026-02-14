@@ -1,4 +1,5 @@
 import { generateFourDigitCode, getCreatorCode } from "./auth.js";
+import { encodeConfig as sharedEncodeConfig } from "./url-config.js";
 
 function splitLines(value) {
   return value
@@ -12,10 +13,6 @@ function parseIndexes(value) {
     .split(",")
     .map((n) => Number(n.trim()))
     .filter((n) => Number.isInteger(n) && n >= 0);
-}
-
-function toBase64Unicode(str) {
-  return btoa(encodeURIComponent(str));
 }
 
 function takeFirstThree(lines) {
@@ -103,7 +100,7 @@ export function buildConfigFromForm(form) {
 }
 
 export function encodeConfig(config) {
-  return toBase64Unicode(JSON.stringify(config));
+  return sharedEncodeConfig(config);
 }
 
 export async function saveConfigToBackend(configData, expiryHours) {

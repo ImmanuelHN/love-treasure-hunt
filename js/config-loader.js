@@ -1,4 +1,5 @@
 import { getSavedEncodedConfig, saveEncodedConfig } from "./auth.js";
+import { decodeConfigFromURL } from "./url-config.js";
 
 function fromBase64Unicode(base64) {
   return decodeURIComponent(atob(base64));
@@ -54,7 +55,8 @@ export async function loadGameData() {
 
   const urlData = getEncodedDataFromUrl();
   if (urlData) {
-    const parsed = decodeConfig(urlData);
+    const decoded = decodeConfigFromURL();
+    const parsed = decoded.config || decodeConfig(urlData);
     if (!parsed) return null;
     saveEncodedConfig(urlData);
     window.GAME_DATA = parsed;
