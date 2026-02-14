@@ -15,7 +15,7 @@ function parseIndexes(value) {
 }
 
 function toBase64Unicode(str) {
-  return btoa(unescape(encodeURIComponent(str)));
+  return btoa(encodeURIComponent(str));
 }
 
 function takeFirstThree(lines) {

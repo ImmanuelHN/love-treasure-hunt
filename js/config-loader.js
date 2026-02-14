@@ -1,11 +1,11 @@
 import { getSavedEncodedConfig, saveEncodedConfig } from "./auth.js";
 
 function fromBase64Unicode(base64) {
-  return decodeURIComponent(escape(atob(base64)));
+  return decodeURIComponent(atob(base64));
 }
 
 function toBase64Unicode(str) {
-  return btoa(unescape(encodeURIComponent(str)));
+  return btoa(encodeURIComponent(str));
 }
 
 export function getEncodedDataFromUrl() {

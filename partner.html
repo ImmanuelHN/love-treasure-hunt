@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -35,29 +35,33 @@
   </main>
   <script type="module" src="js/app.js"></script>
   <script>
-  (function(){
-    const params = new URLSearchParams(window.location.search);
-    const encoded = params.get("data");
+    function getConfigFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      const data = params.get("data");
 
-    if(!encoded){
-      alert("Invalid link 💔");
-      return;
-    }
-
-  try{
-      let decoded;
-      try {
-        decoded = JSON.parse(atob(encoded));
-      } catch {
-        decoded = JSON.parse(decodeURIComponent(escape(atob(encoded))));
+      if (!data) {
+        alert("Invalid link 💔");
+        return null;
       }
-      sessionStorage.setItem("GAME_DATA", JSON.stringify(decoded));
-      window.location.href = "play.html";
-    }catch(e){
-      console.error(e);
-      alert("Failed to load love hunt 💖");
+
+      try {
+        const decoded = JSON.parse(decodeURIComponent(atob(data)));
+        return decoded;
+      } catch (e) {
+        console.error("Decode error:", e);
+        alert("Invalid link 💔");
+        return null;
+      }
     }
-  })();
+
+    const GAME_CONFIG = getConfigFromURL();
+
+    if (!GAME_CONFIG) {
+      throw new Error("Missing configuration");
+    }
+
+    sessionStorage.setItem("GAME_DATA", JSON.stringify(GAME_CONFIG));
+    window.GAME_DATA = GAME_CONFIG;
   </script>
 </body>
 </html>
