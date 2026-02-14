@@ -1,0 +1,7 @@
+:root {
+  --bg-gradient: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  --primary-gradient: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  --text-main: #4c2b41;
+  --text-strong: #2f1c29;
+  --text-muted: #765266;
+}

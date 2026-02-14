@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partner Login | Love Treasure Hunt</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/global.css" />
+  <link rel="stylesheet" href="styles/theme.css" />
+  <link rel="stylesheet" href="styles/animations.css" />
+</head>
+<body data-page="partner">
+  <header class="site-header">
+    <div class="logo">&#128158; Loud Restaurant</div>
+  </header>
+  <main class="page page-wrapper page-center main-container shell">
+    <section class="glass card-lg scale-pop login-card">
+      <h1 class="hero-title">Welcome to Your Love Treasure Hunt &#128150;</h1>
+      <p class="hero-subtitle">
+        A journey crafted specially for you. Enter your secret love code to begin &#10024;
+      </p>
+      <form id="partnerLoginForm" class="stack">
+        <label class="field">
+          <span>Enter Your Secret Love Code &#128140;</span>
+          <input id="partnerCodeInput" type="text" inputmode="numeric" maxlength="4" required placeholder="e.g. 5536" />
+        </label>
+        <div class="actions">
+          <button class="btn btn-primary primary-btn" type="submit">Start Our Journey &#128158;</button>
+        </div>
+      </form>
+      <p id="partnerLoginMessage" class="muted"></p>
+      <a class="btn ghost" href="index.html">Back</a>
+    </section>
+  </main>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
