@@ -33,23 +33,44 @@
       <a class="btn ghost" href="index.html">Back</a>
     </section>
   </main>
-  <script type="module">
-    import { decodeConfigFromURL } from "./js/url-config.js";
+  <script>
+    async function loadConfig() {
+      const params = new URLSearchParams(window.location.search);
 
-    const { config, error } = decodeConfigFromURL();
+      const data = params.get("data");
+      if (data) {
+        try {
+          const decoded = JSON.parse(decodeURIComponent(escape(atob(data))));
+          window.GAME_DATA = decoded;
+          sessionStorage.setItem("GAME_DATA", JSON.stringify(decoded));
+          return;
+        } catch (e) {
+          console.error("Decode error:", e);
+          alert("Invalid link 💔");
+          return;
+        }
+      }
 
-    if (error === "MISSING_DATA") {
+      const id = params.get("id");
+      if (id) {
+        try {
+          const res = await fetch(`/api/loadConfig?id=${id}`);
+          if (!res.ok) throw new Error("Not found");
+          const config = await res.json();
+          window.GAME_DATA = config;
+          sessionStorage.setItem("GAME_DATA", JSON.stringify(config));
+          return;
+        } catch (e) {
+          console.error("Fetch error:", e);
+          alert("Invalid link 💔");
+          return;
+        }
+      }
+
       alert("Invalid link 💔");
-      throw new Error("No data param in URL");
     }
 
-    if (error === "DECODE_FAILED") {
-      alert("Invalid link 💔");
-      throw new Error("Decode failed");
-    }
-
-    window.GAME_DATA = config;
-    sessionStorage.setItem("GAME_DATA", JSON.stringify(config));
+    loadConfig();
   </script>
   <script type="module" src="js/app.js"></script>
 </body>

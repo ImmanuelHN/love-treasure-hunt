@@ -26,9 +26,5 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  res.status(200).json({
-    id,
-    expiresAt: item.expiresAt,
-    configData: item.configData
-  });
+  res.status(200).json(item.configData);
 };

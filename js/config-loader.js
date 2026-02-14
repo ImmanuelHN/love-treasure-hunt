@@ -32,8 +32,9 @@ export async function loadConfigFromId(id) {
   if (!response.ok) return null;
 
   const payload = await response.json();
-  if (!payload?.configData) return null;
-  return payload.configData;
+  if (!payload) return null;
+  if (payload?.configData) return payload.configData;
+  return payload;
 }
 
 export async function loadGameData() {
