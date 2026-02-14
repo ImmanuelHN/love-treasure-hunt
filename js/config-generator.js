@@ -18,6 +18,10 @@ function toBase64Unicode(str) {
   return btoa(unescape(encodeURIComponent(str)));
 }
 
+function takeFirstThree(lines) {
+  return lines.slice(0, 3);
+}
+
 export function buildConfigFromForm(form) {
   const fd = new FormData(form);
   const creatorCode = getCreatorCode() || generateFourDigitCode();
@@ -55,11 +59,9 @@ export function buildConfigFromForm(form) {
           correctCode: String(fd.get("m2g1Code") || "")
         },
         game2: {
-          type: "timeline-slider",
-          pastLabel: String(fd.get("m2g2Past") || ""),
-          presentLabel: String(fd.get("m2g2Present") || ""),
-          futureLabel: String(fd.get("m2g2Future") || ""),
-          correctPosition: Number(fd.get("m2g2Position"))
+          type: "year-selector",
+          years: takeFirstThree(splitLines(String(fd.get("yearOptions") || ""))),
+          correctYear: String(fd.get("correctYear") || "").trim()
         }
       },
       map3: {
@@ -120,7 +122,7 @@ export async function saveConfigToBackend(configData, expiryHours) {
 
 export function generateEncodedShareLink(encodedData) {
   const baseUrl = window.location.origin;
-  return `${baseUrl}/partner.html?data=${encodeURIComponent(encodedData)}`;
+  return `${baseUrl}/partner.html?data=${encodedData}`;
 }
 
 export function generateSavedIdShareLink(id) {

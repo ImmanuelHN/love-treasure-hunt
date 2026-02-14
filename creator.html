@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Hunt | Love Treasure Hunt</title>
+  <title>Love Treasure Hunt</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Pacifico&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="styles/global.css" />
@@ -13,8 +13,9 @@
 </head>
 
 <body data-page="creator">
-  <header class="site-header">
-    <div class="logo">&#128158; Loud Treasure Hunt</div>
+  <header class="top-nav">
+    <span class="logo">&#128158;</span>
+    <span class="brand">Love Treasure Hunt</span>
   </header>
   <main class="page page-wrapper page-center main-container shell">
     <section class="glass card slide-up section-card" id="creatorAuthCard">
@@ -132,35 +133,19 @@
         </fieldset>
 
         <fieldset class="group section-card">
-          <legend>Map 2 • Timeline Slider</legend>
+          <legend>Map 2 • Best Year Selector</legend>
           <div class="field-help">
             <p class="help-title">What should you enter here?</p>
-            <p class="help-desc">Define past, present, and future labels plus one correct slider value.</p>
+            <p class="help-desc">Add three special year options and mark the exact correct year.</p>
           </div>
           <div class="form-grid">
             <label class="field">
-              <span class="label-row">Past Label <span class="tooltip-icon" tabindex="0"
-                  data-tip="Past memory year or event label.">&#9432;</span></span>
-              <small class="input-help">Past memory year/event.</small>
-              <input name="m2g2Past" required placeholder="2019 - Our first coffee" />
+              <span class="label-row">Enter Three Special Years (one per line)</span>
+              <textarea name="yearOptions" rows="4" required placeholder="2019 - First Coffee&#10;2021 - First Trip&#10;2023 - Still choosing you"></textarea>
             </label>
             <label class="field">
-              <span class="label-row">Present Label <span class="tooltip-icon" tabindex="0"
-                  data-tip="Current moment label.">&#9432;</span></span>
-              <small class="input-help">Current moment label.</small>
-              <input name="m2g2Present" required placeholder="Now - Still choosing each other" />
-            </label>
-            <label class="field">
-              <span class="label-row">Future Label <span class="tooltip-icon" tabindex="0"
-                  data-tip="Future dream label.">&#9432;</span></span>
-              <small class="input-help">Future dream label.</small>
-              <input name="m2g2Future" required placeholder="2030 - Home by the sea" />
-            </label>
-            <label class="field">
-              <span class="label-row">Correct Position (0-100) <span class="tooltip-icon" tabindex="0"
-                  data-tip="Enter a number between 0 and 100.">&#9432;</span></span>
-              <small class="input-help">Value must be between 0 and 100.</small>
-              <input name="m2g2Position" type="number" min="0" max="100" required placeholder="64" />
+              <span class="label-row">Correct Year</span>
+              <input type="text" name="correctYear" required placeholder="e.g. 2021" />
             </label>
           </div>
         </fieldset>

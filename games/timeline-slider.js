@@ -1,47 +1,55 @@
-export class TimelineSliderGame {
+export class YearSelectorGame {
   constructor({ config, onComplete }) {
     this.config = config;
     this.onComplete = onComplete;
   }
 
   render(mountEl) {
+    const years = (this.config.years || []).filter(Boolean).slice(0, 3);
+    let selectedYear = null;
+
     mountEl.innerHTML = `
       <section class="stack">
-        <h2>Map 2: Timeline Slider</h2>
-        <p>Slide to the exact point your creator chose.</p>
-        <div class="timeline-labels">
-          <span>${this.config.pastLabel}</span>
-          <span>${this.config.presentLabel}</span>
-          <span>${this.config.futureLabel}</span>
+        <h2>Map 2: Best Year Selector</h2>
+        <p>Pick the special year selected by your creator.</p>
+        <div class="year-slider" id="yearSlider">
+          ${years
+            .map(
+              (year) => `
+            <div class="year-option" data-value="${year}">${year}</div>
+          `
+            )
+            .join("")}
         </div>
-        <form id="timelineForm" class="stack">
-          <input id="timelineInput" name="position" type="range" min="0" max="100" value="50" />
-          <p class="muted">Current: <span id="timelineValue">50</span></p>
-          <button class="btn btn-primary" type="submit">Confirm Position</button>
-        </form>
+        <button id="submitYear" class="btn btn-primary" type="button">Submit</button>
         <p id="feedback" class="muted"></p>
       </section>
     `;
 
-    const form = mountEl.querySelector("#timelineForm");
-    const input = mountEl.querySelector("#timelineInput");
-    const output = mountEl.querySelector("#timelineValue");
+    const options = Array.from(mountEl.querySelectorAll(".year-option"));
+    const submitBtn = mountEl.querySelector("#submitYear");
     const feedback = mountEl.querySelector("#feedback");
 
-    input.addEventListener("input", () => {
-      output.textContent = input.value;
+    options.forEach((opt) => {
+      opt.addEventListener("click", () => {
+        options.forEach((item) => item.classList.remove("active"));
+        opt.classList.add("active");
+        selectedYear = opt.dataset.value;
+      });
     });
 
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const value = Number(new FormData(form).get("position"));
-      const expected = Number(this.config.correctPosition);
-      if (value === expected) {
-        feedback.textContent = "Exactly right.";
+    submitBtn.addEventListener("click", () => {
+      if (!selectedYear) {
+        feedback.textContent = "Choose one year first.";
+        return;
+      }
+
+      if (selectedYear === this.config.correctYear) {
+        feedback.textContent = "Correct year selected.";
         setTimeout(() => this.onComplete(), 600);
         return;
       }
-      feedback.textContent = "Not exact. Try again.";
+      feedback.textContent = "Try again 💖";
     });
   }
 }

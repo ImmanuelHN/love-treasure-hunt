@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Play | Love Treasure Hunt</title>
+  <title>Love Treasure Hunt</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/global.css" />
   <link rel="stylesheet" href="styles/theme.css" />
   <link rel="stylesheet" href="styles/animations.css" />
 </head>
 <body data-page="play">
-  <header class="site-header">
-    <div class="logo">&#128158; Loud Restaurant</div>
+  <header class="top-nav">
+    <span class="logo">&#128158;</span>
+    <span class="brand">Love Treasure Hunt</span>
   </header>
   <main class="page page-wrapper page-center main-container shell">
     <section class="glass card-lg game-card" id="playRoot">
@@ -22,6 +23,14 @@
       <div id="gameMount" class="game-mount"></div>
     </section>
   </main>
+  <script>
+    const GAME_DATA = JSON.parse(sessionStorage.getItem("GAME_DATA"));
+    if(!GAME_DATA){
+      alert("No game data found 💔");
+      window.location.href = "index.html";
+    }
+    window.GAME_DATA = GAME_DATA;
+  </script>
   <script type="module" src="js/app.js"></script>
 </body>
 </html>

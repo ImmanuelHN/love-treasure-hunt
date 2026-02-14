@@ -251,6 +251,15 @@ async function bootPlayPage() {
 
   const auth = getPartnerAuth();
   const expectedCode = String(loaded.config?.auth?.partnerCode || "");
+  if (loaded.sourceType === "session-game-data") {
+    const flow = new GameFlowController({
+      mountEl: byId("gameMount"),
+      progressEl: byId("progressLabel"),
+      titleEl: byId("huntTitle")
+    });
+    flow.init();
+    return;
+  }
 
   if (!auth || auth.partnerCode !== expectedCode || auth.accessKey !== loaded.accessKey) {
     const login = new URL("partner.html", window.location.origin);

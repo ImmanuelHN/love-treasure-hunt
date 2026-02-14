@@ -36,6 +36,22 @@ export async function loadConfigFromId(id) {
 }
 
 export async function loadGameData() {
+  const rawSessionData = sessionStorage.getItem("GAME_DATA");
+  if (rawSessionData) {
+    try {
+      const parsed = JSON.parse(rawSessionData);
+      window.GAME_DATA = parsed;
+      return {
+        config: parsed,
+        encoded: "",
+        sourceType: "session-game-data",
+        accessKey: "session-game-data"
+      };
+    } catch {
+      sessionStorage.removeItem("GAME_DATA");
+    }
+  }
+
   const urlData = getEncodedDataFromUrl();
   if (urlData) {
     const parsed = decodeConfig(urlData);
